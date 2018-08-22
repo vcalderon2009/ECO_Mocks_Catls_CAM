@@ -1,13 +1,21 @@
 |RTD| |License| |Issues|
 
 .. _main_title:
+
 ************************************************************************
 ECO_Mocks_Catls_CAM
 ************************************************************************
 
 Repository for creating ECO synthetic catalogues using Conditional Abundance Matching (CAM)
 
-**Author**: Victor Calderon and Duncan Campbell (`victor.calderon@vanderbilt.edu <mailto:victor.calderon@vanderbilt.edu>`_)
+.. _authors:
+
+-------
+Authors
+-------
+
+- Victor Calderon (`victor.calderon@vanderbilt.edu <mailto:victor.calderon@vanderbilt.edu>`_)
+- Duncan Campbell (`duncanc@andrew.cmu.edu <mailto:duncanc@andrew.cmu.edu>`_)
 
 For further information on how to use the scripts of this project,
 got the documentation shown above.
