@@ -22,20 +22,21 @@ This documentation is part of the repository
 
 .. _papers:
 
-==========
+----------
 References
-==========
+----------
 
-For a more detailed discussion on **CAM**, see the following papers:
+For a more detailed discussion on **CAM**, see the following paper:
 
+- "The Dark Side of Galaxy Color: evidence from new SDSS measurements of galaxy clustering and lensing"
 |arXiv| |MNRAS|
 
 
 .. _MAIN_SEC_CONTENTS:
 
-========
+----------
 Contents
-========
+----------
 
 .. toctree::
   :maxdepth: 2
@@ -52,7 +53,7 @@ Contents
 .. ----------------------------------------------------------------------------
 
 Project based on the `modified <https://github.com/vcalderon2009/cookiecutter-data-science-vc>`_  version of
-`cookiecutter data science project template <https://drivendata.github.io/cookiecutter-data-science/>`_ 
+`cookiecutter data science project template <https://drivendata.github.io/cookiecutter-data-science/>`_
 
 .. |Issues| image:: https://img.shields.io/github/issues/vcalderon2009/ECO_Mocks_Catls_CAM.svg
    :target: https://github.com/vcalderon2009/ECO_Mocks_Catls_CAM/issues
