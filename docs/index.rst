@@ -8,7 +8,14 @@ ECO_Mocks_Catls_CAM Documentation
 
 Repository for creating ECO synthetic catalogues using Conditional Abundance Matching (CAM)
 
-**Author**: Victor Calderon and Duncan Campbell (`victor.calderon@vanderbilt.edu <mailto:victor.calderon@vanderbilt.edu>`_)
+.. _authors:
+
+-------
+Authors
+-------
+
+- Victor Calderon (`victor.calderon@vanderbilt.edu <mailto:victor.calderon@vanderbilt.edu>`_)
+- Duncan Campbell (`duncanc@andrew.cmu.edu <mailto:duncanc@andrew.cmu.edu>`_)
 
 This documentation is part of the repository
 `ECO_Mocks_Catls_CAM <https://github.com/vcalderon2009/ECO_Mocks_Catls_CAM>`_.
