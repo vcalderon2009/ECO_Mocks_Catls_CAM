@@ -1,6 +1,6 @@
 .. image:: https://readthedocs.org/projects/eco-mocks-catls-cam/badge/?version=latest
-:target: https://eco-mocks-catls-cam.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+    :target: https://eco-mocks-catls-cam.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 |RTD| |License| |Issues|
 
