@@ -1,0 +1,24 @@
+name: eco_mocks_catls_cam
+
+channels:
+  - defaults
+
+dependencies:
+    - python>=3.6
+    - ipython
+    - anaconda
+    - astropy
+    - h5py
+    - numpy
+    - pandas
+    - scipy
+    - seaborn
+    - sphinx >= 1.6
+    - pip
+    - pip:
+        - GitPython
+        - progressbar2
+        - cosmo-utils
+        - configparser
+        - sphinx-astropy
+        - sphinx_rtd_theme

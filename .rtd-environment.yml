@@ -1,0 +1,20 @@
+name: eco_mocks_catls_cam
+
+channels:
+    - defaults
+    - conda-forge
+    - astropy
+
+dependencies:
+    - python>=3.6
+    - astropy
+    - seaborn
+    - sphinx >= 1.6
+    - pip
+    - pip:
+        - GitPython
+        - configparser
+        - sphinx-astropy
+        - sphinx-automodapi
+        - sphinx_rtd_theme
+        
