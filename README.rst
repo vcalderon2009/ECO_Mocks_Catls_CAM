@@ -26,7 +26,9 @@ got the documentation shown above.
 References
 ==========
 
-For a more detailed discussion on **CAM**, see the following papers:
+For a more detailed discussion on **CAM**, see the following paper:
+
+- The Dark Side of Galaxy Color: evidence from new SDSS measurements of galaxy clustering and lensing
 
 |arXiv| |MNRAS|
 
