@@ -1,0 +1,1 @@
+[![Documentation Status](https://readthedocs.org/projects/eco-mocks-catls-cam/badge/?version=latest)](https://eco-mocks-catls-cam.readthedocs.io/en/latest/?badge=latest)
