@@ -27,7 +27,7 @@ Project based on the `modified <https://github.com/vcalderon2009/cookiecutter-da
    :alt: Open Issues
 
 .. |RTD| image:: https://readthedocs.org/projects/eco-mocks-catls-cam/badge/?version=latest
-   :target: http://ECO_Mocks_Catls_CAM.readthedocs.io/en/latest/?badge=latest
+   :target: https://eco-mocks-catls-cam.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
 
