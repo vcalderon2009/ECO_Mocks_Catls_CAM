@@ -35,18 +35,18 @@ REMOVE_FILES   = "False"
 
 # -- Analysis -- #
 SIZECUBE = 130
-ABOPT   = "mr"
-ZMED = 0.
-SURVEY  = "ECO"
+ABOPT    = "mr"
+ZMED     = 0.
+SURVEY   = "ECO"
 HALOTYPE = "mvir"
-COSMO   = "Planck"
-HMF     = "warren"
-ZSPACE  = 2
-NMIN    = 1
-SEED    = 1
-VERBOSE = "False"
-L_PERP  = 0.07
-L_PARA  = 1.1
+COSMO    = "Planck"
+HMF      = "warren"
+ZSPACE   = 2
+NMIN     = 1
+SEED     = 1
+VERBOSE  = "False"
+L_PERP   = 0.07
+L_PARA   = 1.1
 
 
 ##############################################################################
