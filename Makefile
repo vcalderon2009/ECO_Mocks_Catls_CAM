@@ -20,6 +20,31 @@ else
 HAS_CONDA=True
 endif
 
+# Directories
+DATA_DIR         = $(PROJECT_DIR)/data
+SRC_DIR          = $(PROJECT_DIR)/src
+SRC_MOCKS_DIR    = $(SRC_DIR)/mocks_create
+SRC_SIMS_DIR     = $(SRC_DIR)/sims_create
+SRC_SURVEY_UTILS = $(SRC_DIR)/survey_utils
+MOCKS_CATL_DIR   = $(DATA)/processed/mocks
+
+# INPUT VARIABLES
+# -- General -- #
+CPU_FRAC       = 0.75
+REMOVE_FILES   = "False"
+
+# -- Analysis -- #
+ABOPT   = "mr"
+SURVEY  = "ECO"
+COSMO   = "Planck"
+HMF     = "warren"
+ZSPACE  = 2
+NMIN    = 1
+SEED    = 1
+VERBOSE = "False"
+L_PERP  = 0.07
+L_PARA  = 1.1
+
 ##############################################################################
 # VARIABLES FOR COMMANDS                                                     #
 ##############################################################################
@@ -125,6 +150,9 @@ cosmo_utils_remove:
 # PROJECT RULES                                                                 #
 #################################################################################
 
+## Creates desired catalogues
+catl_create:
+	@python $(SRC_DIR)/download_data.py
 
 
 #################################################################################
