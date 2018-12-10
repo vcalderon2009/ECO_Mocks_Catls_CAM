@@ -162,6 +162,10 @@ catl_create:
 	-nmin $(NMIN) -l_perp $(L_PERP) -l_para $(L_PARA) -seed $(SEED) \
 	-remove $(REMOVE_FILES) -cpu $(CPU_FRAC) -v $(VERBOSE)
 
+## Upload catalogues
+upload:
+	$(PROJECT_DIR)/Synch_files.sh catalogues
+
 # catl_create:
 # 	@python $(SRC_DIR)/download_data.py
 
