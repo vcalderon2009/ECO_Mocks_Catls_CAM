@@ -436,7 +436,7 @@ def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
     # README file
     readme_dir  = os.path.join( param_dict['survey_args'].proj_dict['base_dir'],
                                 'references')
-    readme_file = glob('{0}/ECO_Mocks_VC.md'.format(readme_dir))
+    readme_file = glob('{0}/ECO_Mocks_VC.md'.format(readme_dir))[0]
     # README file
     # readme_file   = os.path.join(   proj_dict['base_dir'],
     #                                 'references',
