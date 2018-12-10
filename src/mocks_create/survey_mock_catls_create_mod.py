@@ -396,12 +396,15 @@ def directory_skeleton(param_dict, proj_dict):
     
     return proj_dict
 
-def tarball_create(param_dict, proj_dict, catl_ext='hdf5'):
+def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
     """
     Creates TAR object with mock catalogues, figures and README file
 
     Parameters
     -----------
+    hb_ii_name : `str`
+        Name of key corresponding to the Halobias file being analyzed.
+
     param_dict: python dictionary
         dictionary with `project` variables
 
@@ -415,22 +418,20 @@ def tarball_create(param_dict, proj_dict, catl_ext='hdf5'):
     """
     Prog_msg   = param_dict['Prog_msg' ]
     ## List of Mock catalogues
-    catl_path_arr = cfutils.Index(proj_dict['mock_cat_mc'], catl_ext)
+    catl_path_arr = param_dict['survey_args'].hb_gal_catl_files_list(
+        hb_ii_name, catl_kind='memb', perf=False, file_ext=catl_ext)
     ## README file
     # Downloading working README file
-    readme_file   = os.path.join(   proj_dict['base_dir'],
-                                    'references',
-                                    'README_RTD.pdf')
-    cfutils.File_Download_needed(readme_file, param_dict['readme_url'])
-    cfutils.File_Exists(readme_file)
+    # readme_file   = os.path.join(   proj_dict['base_dir'],
+    #                                 'references',
+    #                                 'README_RTD.pdf')
+    # cfutils.File_Download_needed(readme_file, param_dict['readme_url'])
+    # cfutils.File_Exists(readme_file)
     ## Saving to TAR file
-    tar_file_path = os.path.join(   proj_dict['tar_dir'],
-                                    '{0}_{1}_catls.tar.gz'.format(
-                                        param_dict['survey_name'],
-                                        param_dict['halotype']))
+    tar_file_path = param_dict['survey_args'].tar_output_file(hb_ii_name)
     # Opening file
     with tarfile.open(tar_file_path, mode='w:gz') as tf:
-        tf.add(readme_file, arcname=os.path.basename(readme_file))
+        # tf.add(readme_file, arcname=os.path.basename(readme_file))
         for file_kk in catl_path_arr:
             ## Reading in DataFrame
             gal_pd_kk = cfreaders.read_hdf5_file_to_pandas_DF(file_kk)
@@ -470,7 +471,7 @@ def catl_drop_cols(mockgal_pd):
     gal_pd   = mockgal_pd.copy()
     ## Columns
     gal_cols = ['x','y','z','vx','vy','vz','galid','x_orig','y_orig','z_orig',
-                'idx','vel_pec','ra_orig']
+                'vel_pec','ra_orig']
     # New object `without` these columns
     gal_pd_mod = gal_pd.loc[:,~gal_pd.columns.isin(gal_cols)].copy()
 
@@ -510,12 +511,12 @@ def hb_analysis(ii, hb_ii_name, param_dict, proj_dict):
     if (param_dict['survey'] == 'ECO'):
         eco_geometry_mocks(hb_ii_pd, hb_ii_name, param_dict, proj_dict)
     ## Plotting different catalogues in simulation box
-    mockcatls_simbox_plot(param_dict, proj_dict)
+    mockcatls_simbox_plot(hb_ii_name, param_dict, proj_dict)
     ## Luminosity function for each catalogue
-    mocks_lum_function(param_dict, proj_dict)
+    mocks_lum_function(hb_ii_name, param_dict, proj_dict)
     ##
     ## Saving everything to TARBALL
-    tarball_create(param_dict, proj_dict)
+    tarball_create(hb_ii_name, param_dict, proj_dict)
 
 
 ## Reading and extracting data From Halobias file
@@ -760,7 +761,6 @@ def eco_geometry_mocks(hb_ii_pd, hb_ii_name, param_dict, proj_dict):
     ## Reinitializing `param_dict` to None
     if param_dict['verbose']:
         print('{0} Creating Mock Catalogues .... Done'.format(Prog_msg))
-    param_dict = None
 
 ## Main function for creating the mock catalogues
 def catl_create_main(zz_mock, hb_ii_name, pos_coords_mocks_zz, param_dict,
@@ -812,6 +812,8 @@ def catl_create_main(zz_mock, hb_ii_name, pos_coords_mocks_zz, param_dict,
     ## Placing the observer at `pos_zz` and centering coordinates to center 
     ## of box
     for kk, coord_kk in enumerate(['x','y','z']):
+        # Keeping original Coordinates
+        hb_ii.loc[:, coord_kk + '_orig'] = hb_ii[coord_kk].values
         ## Moving observer
         hb_ii.loc[:,coord_kk] = hb_ii[coord_kk] - pos_zz[kk]
         ## Periodic boundaries
@@ -1441,6 +1443,8 @@ def halos_rvir_calc(mockgal_pd, param_dict, catl_sim_eq=False):
         rvir[rvir_bool] = repl_val
     ## Saving to DataFrame
     rvir_pd = pd.DataFrame({'halo_hostid':haloid_arr, 'halo_rvir':rvir})
+    # Dropping 'rvir' column for subhalo
+    gal_pd.drop('halo_rvir', axis=1, inplace=True)
     ## Merging DataFrames
     # Galaxies
     mockgal_pd_new = pd.merge(  left=gal_pd      ,
@@ -1548,13 +1552,16 @@ def writing_to_output_file(mockgal_pd, mockgroup_pd, zz_mock, hb_ii_name,
 
 ## -----------| Plotting-related functions |----------- ##
 
-def mockcatls_simbox_plot(param_dict, proj_dict, catl_ext='.hdf5',
+def mockcatls_simbox_plot(hb_ii_name, param_dict, proj_dict, catl_ext='.hdf5',
     fig_fmt='pdf', figsize=(9,9)):
     """
     Plots the distribution of the mock catalogues in the simulation box
 
     Parameters
     ------------
+    hb_ii_name : `str`
+        Name of key corresponding to the Halobias file being analyzed.
+
     param_dict: python dictionary
         dictionary with `project` variables
 
@@ -1578,12 +1585,15 @@ def mockcatls_simbox_plot(param_dict, proj_dict, catl_ext='.hdf5',
     markersize = plot_dict['markersize']
     ## List of catalogues
     catl_path_arr = param_dict['survey_args'].hb_gal_catl_files_list(
-        hb_name, catl_kind='memb', perf=False, file_ext=catl_ext)
+        hb_ii_name, catl_kind='memb', perf=False, file_ext=catl_ext)
     n_catls       = len(catl_path_arr)
     ## Filename
-    fname = os.path.join(   proj_dict['fig_dir'],
-                            '{0}_{1}_{2}_xyz_mocks.{3}'.format(
+    fig_outdir = param_dict['survey_args'].fig_outdir(hb_ii_name,
+        create_dir=True)
+    fname = os.path.join(   fig_outdir,
+                            '{0}_{1}_{2}_{3}_xyz_mocks.{4}'.format(
                                 param_dict['survey'],
+                                hb_ii_name,
                                 param_dict['halotype'],
                                 param_dict['cosmo_choice'],
                                 fig_fmt))
@@ -1667,13 +1677,16 @@ def mockcatls_simbox_plot(param_dict, proj_dict, catl_ext='.hdf5',
     plt.clf()
     plt.close()
 
-def mocks_lum_function(param_dict, proj_dict, catl_ext='.hdf5',
+def mocks_lum_function(hb_ii_name, param_dict, proj_dict, catl_ext='.hdf5',
     fig_fmt='pdf', figsize=(9,9)):
     """
     Computes the luminosity function of the mock catalogues
 
     Parameters
     ------------
+    hb_ii_name : `str`
+        Name of key corresponding to the Halobias file being analyzed.
+
     param_dict: python dictionary
         dictionary with `project` variables
 
@@ -1699,12 +1712,16 @@ def mocks_lum_function(param_dict, proj_dict, catl_ext='.hdf5',
     ## Separation for the `M_r` bins, in units of magnitudes
     mr_bins_sep = 0.2
     ## List of catalogues
-    catl_path_arr = cfutils.Index(proj_dict['mock_cat_mc'], catl_ext)
+    catl_path_arr = param_dict['survey_args'].hb_gal_catl_files_list(
+        hb_ii_name, catl_kind='memb', perf=False, file_ext=catl_ext)
     n_catls       = len(catl_path_arr)
     ## Filename
-    fname = os.path.join(   proj_dict['fig_dir'],
-                            '{0}_{1}_{2}_lum_function_mocks.{3}'.format(
+    fig_outdir = param_dict['survey_args'].fig_outdir(hb_ii_name,
+        create_dir=True)
+    fname = os.path.join(   fig_outdir,
+                            '{0}_{1}_{2}_{3}_lum_function_mocks.{4}'.format(
                                 param_dict['survey'],
+                                hb_ii_name,
                                 param_dict['halotype'],
                                 param_dict['cosmo_choice'],
                                 fig_fmt))
@@ -1730,8 +1747,8 @@ def mocks_lum_function(param_dict, proj_dict, catl_ext='.hdf5',
         # Color
         color_kk = col_arr[kk]
         ## Calculating luminosity function
-        mr_bins = cstats.Bins_array_create(catl_kk_pd['M_r'], base=mr_bins_sep)
-        N_lum   = [num.where(catl_kk_pd['M_r'] < xx)[0].size+1 for xx in mr_bins]
+        mr_bins = cstats.Bins_array_create(catl_kk_pd['abs_rmag'], base=mr_bins_sep)
+        N_lum   = [num.where(catl_kk_pd['abs_rmag'] < xx)[0].size+1 for xx in mr_bins]
         n_lum   = num.asarray(N_lum)/param_dict['survey_vol']
         ## Plotting
         ax1.plot(mr_bins, n_lum, color=color_kk, marker='o', linestyle='-',
