@@ -136,11 +136,31 @@ class ReadSurvey(object):
         catl_output_dir : `str`
             Output directory for all the catalogues
         """
-        # Output file
+        # Halobias file name - Type
+        if not (isinstance(hb_name, str)):
+            msg = '>>> `hb_name` ({1}) is not a valid type!'
+            msg = msg.format(type(hb_name))
+            raise TypeError(msg)
+        # Catalogue kind - Type
+        if not (isinstance(catl_kind, str)):
+            msg = '>>> `catl_kind` ({1}) is not a valid type!'
+            msg = msg.format(type(catl_kind))
+            raise TypeError(msg)
+        # Catalogue kind - Value
         calt_kind_arr = ['gal', 'memb', 'group']
         if not (catl_kind in calt_kind_arr):
             msg = '>>> `catl_kind` ({1}) is not a valid input! Exiting!'
             msg = msg.format(catl_kind)
+            raise TypeError(msg)
+        # Perfect option - Type
+        if not (isinstance(perf, bool)):
+            msg = '>>> `perf` ({1}) is not a valid type!'
+            msg = msg.format(type(perf))
+            raise TypeError(msg)
+        # Check exists - Type
+        if not (isinstance(check_exist, bool)):
+            msg = '>>> `check_exist` ({1}) is not a valid type!'
+            msg = msg.format(type(check_exist))
             raise TypeError(msg)
         ##
         ## Output directory
@@ -171,6 +191,81 @@ class ReadSurvey(object):
                 raise FileNotFoundError(msg)
 
         return catl_output_dir
+
+    ## List of group galaxy catalogues used in the analysis
+    def hb_gal_catl_files_list(self, hb_name, catl_kind='memb', perf=False,
+        check_exist=False, file_ext='.hdf5'):
+        """
+        Lists the group galaxy files that corresponds to the `hb_name`
+        halobias file.
+
+        Parameters
+        -----------
+        hb_name : `str`
+            Name prefix of the file being analyzed. This is the name of the
+            file that has the information of the galaxies.
+
+        catl_kind : {'gal', 'memb', 'group'}, `str`
+            Option for which kind of catalogue is being analyzed. This
+            variable is set to ``memb`` by default.
+            Options:
+                - `gal` : Galaxy catalogue
+                - `memb` : Group Member galaxy catalogue
+                - `group` : Group galaxy catalogue
+
+        perf : `bool`, optional
+            If True, it returns (creates) the directory for the ``perfect``
+            catalogue. This variable is set to `False` by default.
+
+        check_exist : `bool`, optional
+            If `True`, it checks for whether or not the file exists.
+            This variable is set to `False` by default.
+
+        file_ext : {'.hdf5'}, `str`
+            String of the file extension for the group galaxy catalogues.
+            This variable is set to ``hdf5`` by default.
+
+        Returns
+        -----------
+        hb_gal_catl_arr : `numpy.ndarray`
+            Array with paths to the member galaxy catalogues for a ``hb_name``
+            halobias file.
+        """
+        # Halobias file name - Type
+        if not (isinstance(hb_name, str)):
+            msg = '>>> `hb_name` ({1}) is not a valid type!'
+            msg = msg.format(type(hb_name))
+            raise TypeError(msg)
+        # Catalogue kind - Type
+        if not (isinstance(catl_kind, str)):
+            msg = '>>> `catl_kind` ({1}) is not a valid type!'
+            msg = msg.format(type(catl_kind))
+            raise TypeError(msg)
+        # Catalogue kind - Value
+        calt_kind_arr = ['gal', 'memb', 'group']
+        if not (catl_kind in calt_kind_arr):
+            msg = '>>> `catl_kind` ({1}) is not a valid input! Exiting!'
+            msg = msg.format(catl_kind)
+            raise TypeError(msg)
+        # Perfect option - Type
+        if not (isinstance(perf, bool)):
+            msg = '>>> `perf` ({1}) is not a valid type!'
+            msg = msg.format(type(perf))
+            raise TypeError(msg)
+        # Check exists - Type
+        if not (isinstance(check_exist, bool)):
+            msg = '>>> `check_exist` ({1}) is not a valid type!'
+            msg = msg.format(type(check_exist))
+            raise TypeError(msg)
+        ##
+        ## Output directory
+        hb_catl_outdir = self.catl_output_dir(hb_name, catl_kind=catl_kind,
+            perf=perf, check_exist=True)
+        ## List of files specifying 
+        hb_catl_arr = cfutils.Index(hb_catl_outdir, file_ext)
+
+        return hb_catl_arr
+
 
     ## Directory at which the catalogues are saved
     def halobias_outdir(self, check_exist=False, create_dir=False):
