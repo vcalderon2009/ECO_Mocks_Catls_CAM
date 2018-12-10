@@ -326,8 +326,6 @@ def add_to_dict(param_dict):
     param_dict['url_mock_cubes'] = url_mock_cubes
     param_dict['plot_dict'     ] = plot_dict
     param_dict['const_dict'    ] = const_dict
-    param_dict['l_perp'        ] = l_perp
-    param_dict['l_para'        ] = l_para
     param_dict['survey_name'   ] = survey_name
     param_dict['hb_files_dict' ] = hb_files_dict
     param_dict['n_hb_files'    ] = n_hb_files
