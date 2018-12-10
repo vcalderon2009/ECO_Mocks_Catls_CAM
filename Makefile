@@ -34,8 +34,11 @@ CPU_FRAC       = 0.75
 REMOVE_FILES   = "False"
 
 # -- Analysis -- #
+SIZECUBE = 130
 ABOPT   = "mr"
+ZMED = 0.
 SURVEY  = "ECO"
+HALOTYPE = "mvir"
 COSMO   = "Planck"
 HMF     = "warren"
 ZSPACE  = 2
@@ -44,6 +47,7 @@ SEED    = 1
 VERBOSE = "False"
 L_PERP  = 0.07
 L_PARA  = 1.1
+
 
 ##############################################################################
 # VARIABLES FOR COMMANDS                                                     #
@@ -152,7 +156,14 @@ cosmo_utils_remove:
 
 ## Creates desired catalogues
 catl_create:
-	@python $(SRC_DIR)/download_data.py
+	@python $(SRC_MOCKS_DIR)/survey_mock_catls_create_mod.py \
+	-sizecube $(SIZECUBE) -abopt $(ABOPT) -zmed $(ZMED) -survey $(SURVEY) \
+	-halotype $(HALOTYPE) -cosmo $(COSMO) -hmf $(HMF) -zspace $(ZSPACE) \
+	-nmin $(NMIN) -l_perp $(L_PERP) -l_para $(L_PARA) -seed $(SEED) \
+	-remove $(REMOVE_FILES) -cpu $(CPU_FRAC) -v $(VERBOSE)
+
+# catl_create:
+# 	@python $(SRC_DIR)/download_data.py
 
 
 #################################################################################

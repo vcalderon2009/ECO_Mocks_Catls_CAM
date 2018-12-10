@@ -195,6 +195,18 @@ def get_parser():
                         choices=range(1,1000),
                         metavar='[1-1000]',
                         default=1)
+    ## Perpendicular Linking Length
+    parser.add_argument('-l_perp',
+                        dest='l_perp',
+                        help='Perpendicular linking length',
+                        type=_check_pos_val,
+                        default=0.07)
+    ## Parallel Linking Length
+    parser.add_argument('-l_para',
+                        dest='l_para',
+                        help='Parallel linking length',
+                        type=_check_pos_val,
+                        default=1.1)
     ## Random Seed
     parser.add_argument('-seed',
                         dest='seed',
@@ -295,9 +307,6 @@ def add_to_dict(param_dict):
     ##
     ## Variable constants
     const_dict = val_consts()
-    # FoF linking lengths
-    l_perp = 0.07
-    l_para = 1.1
     # Dictionary of Halobias files
     hb_files_dict = param_dict['survey_args'].halobias_files_dict()
     n_hb_files    = len(hb_files_dict.keys())
