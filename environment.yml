@@ -16,7 +16,7 @@ dependencies:
     - seaborn
     - cython
     - sphinx >= 1.6
-    - pip
+    - pip>=18.1
     - pip:
         - GitPython
         - progressbar2
