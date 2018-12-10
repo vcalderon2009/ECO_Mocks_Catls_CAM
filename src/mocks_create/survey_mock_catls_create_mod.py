@@ -434,6 +434,10 @@ def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
         create_dir=True)
     fig_file = glob('{0}/*xyz*.pdf'.format(fig_outdir))[0]
     # README file
+    readme_dir  = os.path.join( param_dict['survey_args'].proj_dict['base_dir'],
+                                'references')
+    readme_file = glob('{0}/ECO_Mocks_VC.md'.format(readme_dir))
+    # README file
     # readme_file   = os.path.join(   proj_dict['base_dir'],
     #                                 'references',
     #                                 'README_RTD.pdf')
@@ -443,7 +447,7 @@ def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
     tar_file_path = param_dict['survey_args'].tar_output_file(hb_ii_name)
     # Opening file
     with tarfile.open(tar_file_path, mode='w:gz') as tf:
-        # tf.add(readme_file, arcname=os.path.basename(readme_file))
+        tf.add(readme_file, arcname=os.path.basename(readme_file))
         tf.add(fig_file, arcname=os.path.basename(fig_file))
         for file_kk in catl_path_arr:
             ## Reading in DataFrame
