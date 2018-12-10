@@ -1,6 +1,6 @@
 #!/bin/bash
 SESSION=`basename $PWD`
-ENVNAME='sdss_groups_ml'
+ENVNAME='eco_mocks_catls_cam'
 
 # Creating new session
 tmux -2 new-session -d -s $SESSION `cd $PWD`
