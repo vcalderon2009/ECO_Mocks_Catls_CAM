@@ -422,6 +422,10 @@ def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
         hb_ii_name, catl_kind='memb', perf=False, file_ext=catl_ext)
     ## README file
     # Downloading working README file
+    fig_outdir = param_dict['survey_args'].fig_outdir(hb_ii_name,
+        create_dir=True)
+    fig_file = glob('{0}/*xyz*.pdf'.format(fig_outdir))[0]
+    # README file
     # readme_file   = os.path.join(   proj_dict['base_dir'],
     #                                 'references',
     #                                 'README_RTD.pdf')
@@ -432,6 +436,7 @@ def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
     # Opening file
     with tarfile.open(tar_file_path, mode='w:gz') as tf:
         # tf.add(readme_file, arcname=os.path.basename(readme_file))
+        tf.add(fig_file, arcname=os.path.basename(fig_file))
         for file_kk in catl_path_arr:
             ## Reading in DataFrame
             gal_pd_kk = cfreaders.read_hdf5_file_to_pandas_DF(file_kk)
@@ -439,7 +444,8 @@ def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
             gal_pd_mod = catl_drop_cols(gal_pd_kk)
             ## Saving modified DataFrame to file
             file_mod_kk = file_kk+'.mod'
-            cfreaders.pandas_df_to_hdf5_file(gal_pd_mod, file_mod_kk, key='\gal_catl')
+            cfreaders.pandas_df_to_hdf5_file(gal_pd_mod, file_mod_kk,
+                key='\gal_catl')
             cfutils.File_Exists(file_mod_kk)
             # Saving to Tar-file
             tf.add(file_mod_kk, arcname=os.path.basename(file_kk))
