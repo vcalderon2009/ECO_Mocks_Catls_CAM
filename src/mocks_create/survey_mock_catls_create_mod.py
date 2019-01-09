@@ -457,7 +457,7 @@ def tarball_create(hb_ii_name, param_dict, proj_dict, catl_ext='hdf5'):
             ## Saving modified DataFrame to file
             file_mod_kk = file_kk+'.mod'
             cfreaders.pandas_df_to_hdf5_file(gal_pd_mod, file_mod_kk,
-                key='\gal_catl')
+                key='gal_catl')
             cfutils.File_Exists(file_mod_kk)
             # Saving to Tar-file
             tf.add(file_mod_kk, arcname=os.path.basename(file_kk))
@@ -1510,8 +1510,8 @@ def writing_to_output_file(mockgal_pd, mockgroup_pd, zz_mock, hb_ii_name,
 
     """
     ## Keys
-    gal_key   = '/gal_catl'
-    group_key = '/group_catl'
+    gal_key   = 'gal_catl'
+    group_key = 'group_catl'
     ## Filenames
     if perf_catl:
         ## Perfect Galaxy catalogue
