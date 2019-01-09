@@ -172,7 +172,7 @@ upload:
 
 ## Delete existing TAR files
 delete_tar_files:
-	find $(TAR_DIR)/$(COSMO) -type -f -name '*.tar.gz' || echo ""
+	find $(TAR_DIR)/$(COSMO) -type f -name '*.tar.gz' || echo ""
 	rm -rf $(TAR_DIR)/$(COSMO)
 
 ## Delete existing `mock` catalogues
