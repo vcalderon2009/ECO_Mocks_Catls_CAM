@@ -156,7 +156,7 @@ cosmo_utils_remove:
 #################################################################################
 
 ## Creates desired catalogues
-catl_create:
+catl_create: delete_mock_catls delete_tar_files
 	@python $(SRC_MOCKS_DIR)/survey_mock_catls_create_mod.py \
 	-sizecube $(SIZECUBE) -abopt $(ABOPT) -zmed $(ZMED) -survey $(SURVEY) \
 	-halotype $(HALOTYPE) -cosmo $(COSMO) -hmf $(HMF) -zspace $(ZSPACE) \
@@ -166,9 +166,6 @@ catl_create:
 ## Upload catalogues
 upload:
 	$(PROJECT_DIR)/Synch_files.sh catalogues
-
-# catl_create:
-# 	@python $(SRC_DIR)/download_data.py
 
 ## Delete existing TAR files
 delete_tar_files:
