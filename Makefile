@@ -26,7 +26,8 @@ SRC_DIR          = $(PROJECT_DIR)/src
 SRC_MOCKS_DIR    = $(SRC_DIR)/mocks_create
 SRC_SIMS_DIR     = $(SRC_DIR)/sims_create
 SRC_SURVEY_UTILS = $(SRC_DIR)/survey_utils
-MOCKS_CATL_DIR   = $(DATA)/processed/mocks
+PROC_DIR         = $(PROJECT_DIR)/processed
+TAR_DIR          = $(PROC_DIR)/TAR_files
 
 # INPUT VARIABLES
 # -- General -- #
@@ -169,7 +170,29 @@ upload:
 # catl_create:
 # 	@python $(SRC_DIR)/download_data.py
 
+## Delete existing TAR files
+delete_tar_files:
+	find $(TAR_DIR)/$(COSMO) -type -f -name '*.tar.gz' || echo ""
+	rm -rf $(TAR_DIR)/$(COSMO)
 
+## Delete existing `mock` catalogues
+delete_mock_catls:
+	find $(PROC_DIR)/$(COSMO) -type f -name '*.hdf5' || echo ""
+	rm -rf $(PROC_DIR)/$(COSMO)
+
+## Delete all files, except for `raw` files
+delete_all_but_raw:
+	@rm -rf $(DATA_DIR)/external/*
+	@rm -rf $(DATA_DIR)/interim/*
+	@rm -rf $(DATA_DIR)/processed/*
+
+## Clean the `./data` folder and remove all of the files
+clean_data_dir:
+	@rm -rf $(DATA_DIR)/external/*
+	@rm -rf $(DATA_DIR)/interim/*
+	@rm -rf $(DATA_DIR)/processed/*
+	@rm -rf $(DATA_DIR)/raw/*
+ 
 #################################################################################
 # Self Documenting Commands                                                     #
 #################################################################################
