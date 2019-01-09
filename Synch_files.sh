@@ -10,8 +10,11 @@
 
 # Defining Directory
 DIR_LOCAL="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ZOIDBERG_SSH="caldervf@zoidberg.phy.vanderbilt.edu:"
-DIR_ZOIDBERG="${ZOIDBERG_SSH}/home/www/groups/data_eco_vc/ECO_CAM/Mock_Catalogues"
+SSH_USERNAME="caldervf"
+SSH_HOST="zoidberg.phy.vanderbilt.edu"
+SSH_PATH="/home/www/groups/data_eco_vc/ECO_CAM/Mock_Catalogues"
+# Commands to Send over SSH
+CATL_COPY_COMMAND="${SSH_USERNAME}@${SSH_HOST}:${SSH_PATH}"
 # option
 file_opt=$1
 echo "\n==> Option: ${file_opt}"
@@ -31,6 +34,10 @@ fi
 ## Synchronizing
 # Catalogues
 if [[ ${file_opt} == 'catalogues' ]]; then
-    echo "==> rsync -chavzP --stats "${DIR_LOCAL}/data/processed/TAR_files/"  "${DIR_ZOIDBERG}"\n"
-    rsync -chavzP --stats "${DIR_LOCAL}/data/processed/TAR_files/"  "${DIR_ZOIDBERG}"
+    # Removes previous catalogues
+    echo "ssh "${SSH_USERNAME}@${SSH_HOST}" rm -rf ${SSH_PATH}/*"
+    ssh "${SSH_USERNAME}@${SSH_HOST}" rm -rf ${SSH_PATH}/*
+    # Copying over files
+    echo "==> rsync -chavzP --stats "${DIR_LOCAL}/data/processed/TAR_files/"  "${CATL_COPY_COMMAND}"\n"
+    rsync -chavzP --stats "${DIR_LOCAL}/data/processed/TAR_files/"  "${CATL_COPY_COMMAND}"
 fi
