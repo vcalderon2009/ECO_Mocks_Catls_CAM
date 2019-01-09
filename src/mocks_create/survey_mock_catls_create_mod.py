@@ -41,6 +41,7 @@ import seaborn as sns
 from progressbar import (Bar, ETA, FileTransferSpeed, Percentage, ProgressBar,
                         ReverseBar, RotatingMarker)
 from tqdm import tqdm
+from datetime import datetime
 
 # Project packages
 from src.survey_utils import ReadSurvey
@@ -1983,6 +1984,8 @@ def main(args):
     """
     Main function to create CAM mock group galaxy catalogues.
     """
+    ## Starting time
+    start_time = datetime.now()
     ## Reading all elements and converting to python dictionary
     param_dict = vars(args)
     ## Checking for correct input
@@ -2042,8 +2045,10 @@ def main(args):
     ## Joining `procs`
     for proc in procs:
         proc.join()
-
-
+    ## End time for running the catalogues
+    end_time   = datetime.now()
+    total_time = end_time - start_time
+    print('{0} Total Time taken (Create): {1}'.format(Prog_msg, total_time))
 
 # Main function
 if __name__=='__main__':
