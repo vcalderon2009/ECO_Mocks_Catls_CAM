@@ -26,7 +26,7 @@ SRC_DIR          = $(PROJECT_DIR)/src
 SRC_MOCKS_DIR    = $(SRC_DIR)/mocks_create
 SRC_SIMS_DIR     = $(SRC_DIR)/sims_create
 SRC_SURVEY_UTILS = $(SRC_DIR)/survey_utils
-PROC_DIR         = $(PROJECT_DIR)/processed
+PROC_DIR         = $(DATA_DIR)/processed
 TAR_DIR          = $(PROC_DIR)/TAR_files
 
 # INPUT VARIABLES
