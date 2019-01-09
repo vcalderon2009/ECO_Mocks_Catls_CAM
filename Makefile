@@ -172,12 +172,12 @@ upload:
 
 ## Delete existing TAR files
 delete_tar_files:
-	find $(TAR_DIR)/$(COSMO) -type f -name '*.tar.gz' || echo ""
+	find $(TAR_DIR)/$(COSMO) -type f -name '*.tar.gz' -delete || echo ""
 	rm -rf $(TAR_DIR)/$(COSMO)
 
 ## Delete existing `mock` catalogues
 delete_mock_catls:
-	find $(PROC_DIR)/$(COSMO) -type f -name '*.hdf5' || echo ""
+	find $(PROC_DIR)/$(COSMO) -type f -name '*.hdf5' -delete || echo ""
 	rm -rf $(PROC_DIR)/$(COSMO)
 
 ## Delete all files, except for `raw` files
@@ -192,7 +192,7 @@ clean_data_dir:
 	@rm -rf $(DATA_DIR)/interim/*
 	@rm -rf $(DATA_DIR)/processed/*
 	@rm -rf $(DATA_DIR)/raw/*
- 
+
 #################################################################################
 # Self Documenting Commands                                                     #
 #################################################################################
